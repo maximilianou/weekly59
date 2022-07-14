@@ -1,0 +1,22 @@
+/* Menu Nav inside page/site content */
+.menuNavStyle {
+  position: fixed;
+  width: 100px;
+  top: 40px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  right: -60px;
+  max-height: 60%;
+  overflow: auto;
+}
+.menuNavStyle:hover {
+  right: 0px;
+}
+.menuNavItemStyle {
+  padding: 12px;
+  display: inline-block;
+  width: 100%;
+  border-radius: 12px 0 0 12px;
+  background-color: rgb(100,100,100,0.5);
+}

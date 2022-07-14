@@ -1,0 +1,23 @@
+/* Menu side bar*/
+.menuStyle {
+  position: fixed;
+  width: 100px;
+  top: 40px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  left: -60px;
+  max-height: 60%;
+  overflow: auto;
+}
+.menuStyle:hover {
+  left: 0px;
+}
+.manuItemStyle {
+  padding: 12px;
+  display: inline-block;
+  width: 100%;
+  border-radius: 0 12px 12px 0;
+  background-color: rgb(100,100,100,0.5);
+  text-align: end;
+}
