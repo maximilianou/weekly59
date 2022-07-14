@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "./node_modules/.bin/next build && ./node_modules/.bin/next export"
+
   },
   "dependencies": {
     "next": "12.2.2",

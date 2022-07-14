@@ -1,6 +1,12 @@
 # weekly59
 solidity nextjs hardhat typescript
 
+- Solidity 0.8.9
+- Nextjs 12.2.2
+- Hardhat 2.10.1
+
+<https://nextjs.org/learn/basics/create-nextjs-app>
+
 - Create Next App Typescript
 ```
 npx creat-next-app blog4 --typescript
@@ -24,7 +30,9 @@ node --version
 v18.3.0
 ```
 
-- 
+<https://hardhat.org/tutorial/creating-a-new-hardhat-project>
+
+- Creating hardhat environment by hardhat team
 ```
 npm install -D hardhat
 rm README.md tsconfig.json
@@ -124,4 +132,32 @@ Generating typings for: 2 artifacts in dir: typechain-types for target: ethers-v
 Successfully generated 6 typings!
 Compiled 2 Solidity files successfully
 ```
+
+- [ok] run hardhat test, just before touching any solidity code, is part of hardhat team work ;)
+```
+npx hardhat test
+  Lock
+    Deployment
+      ✔ Should set the right unlockTime (1637ms)
+      ✔ Should set the right owner
+      ✔ Should receive and store the funds to lock
+      ✔ Should fail if the unlockTime is not in the future (92ms)
+    Withdrawals
+      Validations
+Unlock time is '1689365381' and block timestamp is '1657829383'
+        ✔ Should revert with the right error if called too soon (81ms)
+Unlock time is '1689365381' and block timestamp is '1689365382'
+        ✔ Should revert with the right error if called from another account (99ms)
+Unlock time is '1689365381' and block timestamp is '1689365382'
+        ✔ Shouldn't fail if the unlockTime has arrived and the owner calls it (95ms)
+      Events
+Unlock time is '1689365381' and block timestamp is '1689365382'
+        ✔ Should emit an event on withdrawals (81ms)
+      Transfers
+Unlock time is '1689365381' and block timestamp is '1689365382'
+        ✔ Should transfer the funds to the owner (73ms)
+  9 passing (2s)
+```
+
+
 
