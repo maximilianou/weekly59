@@ -159,5 +159,125 @@ Unlock time is '1689365381' and block timestamp is '1689365382'
   9 passing (2s)
 ```
 
+-----
+
+<https://buildmedia.readthedocs.org/media/pdf/solidity/develop/solidity.pdf>
+
+<https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require>
+
+<https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
+
+------
+-----
+- contracts/SafeMath.sol 0.8 strict math overflow
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
+
+import "hardhat/console.sol";
+
+contract SafeMath {
+  function testUnderflow() public pure returns (uint) {
+    uint x = 0;
+    x--; // check safe underflow ;)
+    return x;
+  }
+  function testUncheckedUndeflow() public pure returns (int){
+    int x = 0;
+    unchecked { // out of safe check underflow :o
+      x--; 
+    }
+    return x;
+  }
+}
+```
+- test/SafeMath.ts solidity 0.8 overflow test PANIC ARITHMETIC OVERFLOW
+```tsx
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+describe(`SafeMath`, () => {
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const SafeMath = await ethers.getContractFactory("SafeMath");
+    const safeMath = await SafeMath.deploy();
+    return { safeMath, owner, otherAccount };
+  }
+
+  describe(`Deployment Safe Math`, () => {
+    it(`Should check Underflow OK`, async () => {
+      const { safeMath } = await loadFixture(deployFixture);
+      // <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
+      await expect(safeMath.testUnderflow()).to.be
+      .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ) ;
+    });
+    it(`Should NOT check or uncheck Underflow calculus error prone.`, async () => {
+      const { safeMath } = await loadFixture(deployFixture);
+      await expect(safeMath.testUncheckedUndeflow()).to.be.not.null;
+    });
+  });
+});
+```
+- test result
+```
+npx hardhat test
+  SafeMath
+    Deployment Safe Math
+      ✔ Should check Underflow OK (101ms)
+      ✔ Should NOT check or uncheck Underflow mmmm calculus error prone.
+```
+
+------
+------
+
+- Custom Error solidity and test with Hardhat
+<https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement>
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
+error VENDING_MACHINE__UNAUTORIZED(); // custom error
+// <https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement>
+contract VendingMachine {
+  address payable owner = payable(msg.sender);
+  function withdraw() public {
+    if(msg.sender == owner) // == instead of != only for testing purposes
+      revert VENDING_MACHINE__UNAUTORIZED(); 
+    owner.transfer( address(this).balance );
+  }
+}
+```
+<https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithcustomerror>
+```tsx
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+
+describe(`VendingMachine`, () => {
+
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const VendingMachine = await ethers.getContractFactory("VendingMachine");
+    const vendingMachine = await VendingMachine.deploy();
+    return { vendingMachine, owner, otherAccount };
+  }
+
+  describe(`Deployment VendingMachine`, () => {
+    it(`Should Custom Error OK`, async () => {
+      const { vendingMachine, otherAccount } = await loadFixture(deployFixture);
+      await expect(vendingMachine.withdraw()).to.be
+         .revertedWithCustomError( vendingMachine,"VENDING_MACHINE__UNAUTORIZED" ) ;
+      //<https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithcustomerror>
+    });
+  });
+});
+
+```
+
+------
+------
+
 
 
