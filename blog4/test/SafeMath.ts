@@ -18,7 +18,7 @@ describe(`SafeMath`, () => {
       const { safeMath } = await loadFixture(deployFixture);
       // <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
       await expect(safeMath.testUnderflow()).to.be
-      .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ) ;
+      .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ) ; // look where the await is ;)
     });
     it(`Should NOT check or uncheck Underflow calculus error prone.`, async () => {
       const { safeMath } = await loadFixture(deployFixture);
