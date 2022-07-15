@@ -1,5 +1,7 @@
 # weekly59
-solidity nextjs hardhat typescript
+onboarding Solidity Hardhat Typescript TDD Nextjs
+
+### step 1 - environment
 
 - Solidity 0.8.9
 - Nextjs 12.2.2
@@ -168,7 +170,8 @@ Unlock time is '1689365381' and block timestamp is '1689365382'
 <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
 
 ------
------
+### step 2 - Start Solidity by TDD Typescript Hardhat 
+------
 - contracts/SafeMath.sol 0.8 strict math overflow
 ```tsx
 // SPDX-License-Identifier: MIT
@@ -279,5 +282,165 @@ describe(`VendingMachine`, () => {
 ------
 ------
 
+#### tdd function ok / rejected SafeMath inside function
+
+- contracts/FunctionIntro.sol  
+```ts
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+
+// import "hardhat/console.sol";
+// function log( uint msg ){
+//   console.log( msg );
+// }
+
+contract FunctionIntro {
+  function add(uint x, uint y) external pure returns (uint) {
+    return x + y;
+  }
+  function sub(uint x, uint y) external pure returns (uint) {
+    return x - y;
+  }
+}
+```
+- test/FunctionIntro.ts
+```ts
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+
+describe(`FunctionIntro`, () => {
+
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const FunctionIntro = await ethers.getContractFactory("FunctionIntro");
+    const functionIntro = await FunctionIntro.deploy();
+    return { functionIntro, owner, otherAccount };
+  }
+
+  describe(`Deployment FunctionIntro`, () => {
+    it(`Should add a + b = c`, async () => {
+      const { functionIntro } = await loadFixture(deployFixture);
+      console.log( await functionIntro.add( 3, 7));
+      expect( await functionIntro.add( 3, 7) ).to.be.equal(10); // look where the await is ;)
+    });
+    it(`Should sub Reject Arithmetic a - b = d`, async () => {
+      const { functionIntro } = await loadFixture(deployFixture);
+      await expect( functionIntro.sub( 3, 7) ).to.be
+      .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ); // look where the await is ;)
+    });
+    it(`Should sub a - b = d [ok]`, async () => {
+      const { functionIntro } = await loadFixture(deployFixture);
+      expect( await functionIntro.sub( 7, 5) ).to.be.equal(2); // look where the await is ;)
+    });
+  });
+});
+```
+
+------
+### STEP 3 - Solidity Contract looking for storage memory instance Typescript TDD Hardhat
+------
+
+- contracts/Counter.sol
+```ts
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+
+contract Counter {
+  uint public count;
+  function inc() external {
+    count += 1;
+  }
+  function dec() external {
+    count -= 1;
+  }
+}
+```
+- test/Counter.ts
+```ts
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+
+describe(`Counter`, () => {
+
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const Counter = await ethers.getContractFactory("Counter");
+    const counter = await Counter.deploy();
+    return { counter, owner, otherAccount };
+  }
+
+  describe(`Deployment Counter`, () => {
+    it(`Should increment storage data in contract Counter`, async () => {
+      const { counter } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await counter.inc() ).to.be.not.reverted; // look where the await is ;)
+    });
+    it(`Should decrement storage data in counter to 0 [ok]`, async () => {
+      const { counter } = await loadFixture(deployFixture); // Give an instance 2 of the contract counter
+      expect( await counter.inc() ).to.be.not.reverted; // look where the await is ;)
+      expect( await counter.dec() ).to.be.not.reverted; // look where the await is ;)
+    });
+    it(`Should decrement Reject Arithmetic Underflow `, async () => {
+      const { counter } = await loadFixture(deployFixture); // Give an instance 3 of the contract counter
+      await expect( counter.dec() ).to.be
+      .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ); // look where the await is ;)
+    });
+  });
+});
+```
+- Result: 
+```ts
+npx hardhat test
+
+  Counter
+    Deployment Counter
+      ✔ Should increment storage data in contract Counter (1424ms)
+      ✔ Should decrement storage data in counter to 0 [ok] (95ms)
+      ✔ Should decrement Reject Arithmetic Underflow  (47ms)
+
+  FunctionIntro
+    Deployment FunctionIntro
+BigNumber { value: "10" }
+      ✔ Should add a + b = c (167ms)
+      ✔ Should sub Reject Arithmetic a - b = d (38ms)
+      ✔ Should sub a - b = d [ok]
+
+  Lock
+    Deployment
+      ✔ Should set the right unlockTime (166ms)
+      ✔ Should set the right owner (48ms)
+      ✔ Should receive and store the funds to lock
+      ✔ Should fail if the unlockTime is not in the future (85ms)
+    Withdrawals
+      Validations
+Unlock time is '1689450825' and block timestamp is '1657914827'
+        ✔ Should revert with the right error if called too soon (59ms)
+Unlock time is '1689450825' and block timestamp is '1689450826'
+        ✔ Should revert with the right error if called from another account (75ms)
+Unlock time is '1689450825' and block timestamp is '1689450826'
+        ✔ Shouldn't fail if the unlockTime has arrived and the owner calls it (80ms)
+      Events
+Unlock time is '1689450825' and block timestamp is '1689450826'
+        ✔ Should emit an event on withdrawals (57ms)
+      Transfers
+Unlock time is '1689450825' and block timestamp is '1689450826'
+        ✔ Should transfer the funds to the owner (70ms)
+
+  SafeMath
+    Deployment Safe Math
+      ✔ Should check Underflow OK (140ms)
+      ✔ Should NOT check or uncheck Underflow calculus error prone.
+
+  VendingMachine
+    Deployment VendingMachine
+      ✔ Should Custom Error OK (132ms)
+
+  18 passing (3s)
+```
 
 
