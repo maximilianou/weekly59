@@ -378,12 +378,17 @@ describe(`Counter`, () => {
   describe(`Deployment Counter`, () => {
     it(`Should increment storage data in contract Counter`, async () => {
       const { counter } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await counter.count() ).to.be.equal(0);
       expect( await counter.inc() ).to.be.not.reverted; // look where the await is ;)
+      expect( await counter.count() ).to.be.equal(1);
     });
     it(`Should decrement storage data in counter to 0 [ok]`, async () => {
       const { counter } = await loadFixture(deployFixture); // Give an instance 2 of the contract counter
+      expect( await counter.count() ).to.be.equal(0);
       expect( await counter.inc() ).to.be.not.reverted; // look where the await is ;)
+      expect( await counter.count() ).to.be.equal(1);
       expect( await counter.dec() ).to.be.not.reverted; // look where the await is ;)
+      expect( await counter.count() ).to.be.equal(0);
     });
     it(`Should decrement Reject Arithmetic Underflow `, async () => {
       const { counter } = await loadFixture(deployFixture); // Give an instance 3 of the contract counter
@@ -391,8 +396,7 @@ describe(`Counter`, () => {
       .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ); // look where the await is ;)
     });
   });
-});
-```
+});```
 - Result: 
 ```ts
 npx hardhat test
