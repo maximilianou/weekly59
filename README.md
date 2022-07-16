@@ -1,6 +1,6 @@
 # weekly59 - 20220715
 
-Onboarding Solidity Hardhat Typescript TDD Nextjs
+## *Onboarding* Solidity Hardhat Typescript TDD Nextjs
 
 ### step 1 - environment
 
@@ -22,8 +22,8 @@ npx creat-next-app blog4 --typescript
 
 - Layout from weekly57 
   - hand written React, css, html
-  - Simple menu hardcoded from <https://www.w3school.com>
-  - Simple paralax from <https://w3school.com>
+  - Simple menu hardcoded from <https://www.w3schools.com/howto/howto_css_sidenav_buttons.asp>
+  - Simple paralax from <https://www.w3schools.com/howto/howto_css_parallax.asp>
 ```
 cd blog4
 mkdir components
@@ -507,4 +507,103 @@ Unlock time is '1689450825' and block timestamp is '1689450826'
   18 passing (3s)
 ```
 
+-----
+### STEP 4 - Solidity **Modifier** TDD Typescript Hardhat
+-----
 
+- Solidity Modifiers
+  - Always check isolated code
+  - When there is an error or problem, isolate the problem
+
+- contracts/FunctionModifier.sol   
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+contract FunctionModifier {
+  bool public paused;
+  uint public count;
+  function setPaused(bool _paused) external {
+    paused = _paused;
+  }
+  modifier whenNotPaused(){
+    require(!paused, "Paused");
+    _;
+  }
+  function inc() external whenNotPaused {
+    count += 1;
+  }
+  function dec() external whenNotPaused {
+    count -= 1;
+  }
+  modifier cap(uint _x){
+    require(_x < 100, "x >= 100");
+    // execute some code Before the main thread
+    _; // execute back the main thread
+    // execute some code After the main thread ( sandwich )
+  }
+  function incBy(uint _x) external whenNotPaused cap(_x) {
+    count += _x;
+  }
+}
+```
+- test/FunctionModifier.ts
+```tsx
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+describe(`FunctionModifier`, () => {
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const FunctionModifier = await ethers.getContractFactory("FunctionModifier");
+    const functionModifier = await FunctionModifier.deploy();
+    return { functionModifier, owner, otherAccount };
+  }
+  describe(`Deployment FunctionModifier`, () => {
+    it(`Should increment`, async () => {
+      const { functionModifier } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await functionModifier.count() ).to.be.equal(0);
+      expect( await functionModifier.inc() ).to.be.not.reverted; // look where the await is ;)
+      expect( await functionModifier.count() ).to.be.equal(1);
+    });
+    it(`Should decrement`, async () => {
+      const { functionModifier } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await functionModifier.count() ).to.be.equal(0);
+      expect( await functionModifier.inc() ).to.be.not.reverted; // look where the await is ;)
+      expect( await functionModifier.count() ).to.be.equal(1);
+      expect( await functionModifier.dec() ).to.be.not.reverted; // look where the await is ;)
+      expect( await functionModifier.count() ).to.be.equal(0);
+    });
+    it(`Should Revert "Paused" - modifier `, async () => {
+      const { functionModifier } = await loadFixture(deployFixture); // Give an instance 3 of the contract counter
+      await functionModifier.setPaused(true);
+      await expect( functionModifier.dec() ).to.be
+      .revertedWith( "Paused" ); // look where the await is ;)
+    });
+    it(`Should Revert "x >= 100" - modifier `, async () => {
+      const { functionModifier } = await loadFixture(deployFixture); // Give an instance 3 of the contract counter
+      await expect( functionModifier.incBy(200) ).to.be
+      .revertedWith( "x >= 100" ); // look where the await is ;)
+    });
+  });
+});
+```
+- [ok] Result - TDD **modifier** catch rejection revert assert
+```
+npx hardhat test test/FunctionModifier.ts
+
+  FunctionModifier
+    Deployment FunctionModifier
+      ✔ Should increment (1515ms)
+      ✔ Should decrement (164ms)
+      ✔ Should Revert "Paused" - modifier  (97ms)
+      ✔ Should Revert "x >= 100" - modifier  (48ms)
+
+  4 passing (2s)
+```
+
+------
+
+------
+------
