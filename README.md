@@ -1,4 +1,4 @@
-# weekly59 - 20220715
+# weekly59 - 20220715 - *Onboarding* Solidity
 
 ## *Onboarding* Solidity Hardhat Typescript TDD Nextjs
 
