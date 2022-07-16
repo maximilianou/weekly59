@@ -1,5 +1,6 @@
-# weekly59
-onboarding Solidity Hardhat Typescript TDD Nextjs
+# weekly59 - 20220715
+
+Onboarding Solidity Hardhat Typescript TDD Nextjs
 
 ### step 1 - environment
 
@@ -9,12 +10,20 @@ onboarding Solidity Hardhat Typescript TDD Nextjs
 
 <https://nextjs.org/learn/basics/create-nextjs-app>
 
-- Create Next App Typescript
+- Create Next App Typescript 
+  - Starting point
+  - Just the tools, 
+  - Default as we can,
+  - Fresh Power of Teams Frameworks ;) 
+  - ( do Not clone boilerplate )
 ```
 npx creat-next-app blog4 --typescript
 ```
 
-- Layout from weekly57
+- Layout from weekly57 
+  - hand written React, css, html
+  - Simple menu hardcoded from <https://www.w3school.com>
+  - Simple paralax from <https://w3school.com>
 ```
 cd blog4
 mkdir components
@@ -23,24 +32,29 @@ cp ../../weekly57/blog3/styles/* styles/
 cp ../../weekly57/blog3/public/* public/
 ```
 
-- Nodejs version 18
+- Nodejs version 18 
+  - @latest
+  - Always start with the @latest 
+  - Or testing or beta, but not LTS ( is my personal opinion, break and fix or inform ;)
+  
 ```
 nvm install 18
 nvm use 18
-
 node --version
 v18.3.0
 ```
 
 <https://hardhat.org/tutorial/creating-a-new-hardhat-project>
 
-- Creating hardhat environment by hardhat team
+- Creating hardhat environment 
+  - By **hardhat team** <https://hardhat.org/>
 ```
 npm install -D hardhat
 rm README.md tsconfig.json
 ```
 
 - tsconfig.json
+  - take care **module: esnext** 
 ```
 {
   "compilerOptions": {
@@ -52,7 +66,7 @@ rm README.md tsconfig.json
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "esnext", 
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -63,7 +77,10 @@ rm README.md tsconfig.json
   "exclude": ["node_modules"]
 }
 ```
-- [error] try to hardhat compile ... :o
+- [error] try to hardhat compile at once ... :o
+  - But I mix create-next-app and hardhat creation
+  - Step by step, baby steps 
+  
 ```
 npx hardhat compile
 Error HH13: Your Hardhat project uses typescript, but ts-node is not installed.
@@ -77,6 +94,7 @@ npm install -D ts-node
 ```
 
 - [error] try to hardhat compile ... :o
+  - I am missing something, lets read the error and docs
 ```
  npx hardhat compile
 An unexpected error occurred:
@@ -87,11 +105,13 @@ import "@nomicfoundation/hardhat-toolbox";
 ```
 
 - [ok] install hardhat-toolbox dependencies ;)
+  - Just reading the docs <https://hardhat.org>, **Thank you Hardhat Team!!**
 ```
 npm install -D @nomicfoundation/hardhat-toolbox
 ```
 
 - [error]
+  - HO, I have to read the error :() 
 ```
 npx hardhat compile
 An unexpected error occurred:
@@ -104,6 +124,8 @@ SyntaxError: Cannot use import statement outside a module
 ```
 
 - [ok] 
+  - Again! Thanks **Nextjs Team** and **Hardhat Team** 
+  - **module: CommonJS**
 ```
 {
   "compilerOptions": {
@@ -135,7 +157,11 @@ Successfully generated 6 typings!
 Compiled 2 Solidity files successfully
 ```
 
-- [ok] run hardhat test, just before touching any solidity code, is part of hardhat team work ;)
+- [ok] run hardhat test 
+  - Just before touching any solidity code
+  - Hardhat team exelent work ;)
+  - With Complete Sample :()
+
 ```
 npx hardhat test
   Lock
@@ -195,6 +221,9 @@ contract SafeMath {
 }
 ```
 - test/SafeMath.ts solidity 0.8 overflow test PANIC ARITHMETIC OVERFLOW
+  - I need to write code
+  - Step by step 
+  
 ```tsx
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
@@ -223,7 +252,7 @@ describe(`SafeMath`, () => {
   });
 });
 ```
-- test result
+- [ok] test result
 ```
 npx hardhat test
   SafeMath
@@ -236,6 +265,10 @@ npx hardhat test
 ------
 
 - Custom Error solidity and test with Hardhat
+  - This is interesting 0.8 
+  - **Naming Error Code** 
+  - can **Share code many contracts**  
+  
 <https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement>
 ```tsx
 // SPDX-License-Identifier: MIT
@@ -277,6 +310,15 @@ describe(`VendingMachine`, () => {
   });
 });
 
+```
+- [ok] 
+  - Custom Error Code ( Naming Error Code ) :()
+  - TDD Catch rejection ;)  
+   
+```
+  VendingMachine
+    Deployment VendingMachine
+      ✔ Should Custom Error OK (132ms)
 ```
 
 ------
@@ -338,6 +380,18 @@ describe(`FunctionIntro`, () => {
   });
 });
 ```
+- [ok] Verify tdd functions 
+  - change state
+  - rejection status 
+```
+  FunctionIntro
+    Deployment FunctionIntro
+BigNumber { value: "10" }
+      ✔ Should add a + b = c (167ms)
+      ✔ Should sub Reject Arithmetic a - b = d (38ms)
+      ✔ Should sub a - b = d [ok]
+
+```
 
 ------
 ### STEP 3 - Solidity Contract looking for storage memory instance Typescript TDD Hardhat
@@ -396,8 +450,14 @@ describe(`Counter`, () => {
       .revertedWithPanic( PANIC_CODES.ARITHMETIC_UNDER_OR_OVERFLOW ); // look where the await is ;)
     });
   });
-});```
-- Result: 
+});
+```
+
+- [ok] Result
+  - Instance variable in blockchain contract
+  - Change state variable in blockchain 
+  - Catch rejection of SafeMath Underflow
+  
 ```ts
 npx hardhat test
 
