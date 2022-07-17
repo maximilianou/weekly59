@@ -1,16 +1,20 @@
-# weekly59 - 20220715 - *Onboarding* Solidity
+# *Onboarding* Solidity TDD Typescript { weekly59: 20220715 }
 
-## *Onboarding* Solidity Hardhat Typescript TDD Nextjs
+## *Onboarding* Solidity Typescript TDD Hardhat Nextjs
 
 ### step 1 - environment
 
-- Solidity 0.8.9
-- Nextjs 12.2.2
-- Hardhat 2.10.1
+-----
+- Environment Tools Version
+  - Solidity 0.8.9
+  - Nextjs 12.2.2
+  - Hardhat 2.10.1
+-----
 
+-----
 <https://nextjs.org/learn/basics/create-nextjs-app>
 
-- Create Next App Typescript 
+- Create **Nextjs** App Typescript 
   - Starting point
   - Just the tools, 
   - Default as we can,
@@ -20,7 +24,8 @@
 npx creat-next-app blog4 --typescript
 ```
 
-- Layout from weekly57 
+-----
+- Layout from weekly57 ( reference: **w3schools** )
   - hand written React, css, html
   - Simple menu hardcoded from <https://www.w3schools.com/howto/howto_css_sidenav_buttons.asp>
   - Simple paralax from <https://www.w3schools.com/howto/howto_css_parallax.asp>
@@ -32,6 +37,7 @@ cp ../../weekly57/blog3/styles/* styles/
 cp ../../weekly57/blog3/public/* public/
 ```
 
+-----
 - Nodejs version 18 
   - @latest
   - Always start with the @latest 
@@ -44,9 +50,10 @@ node --version
 v18.3.0
 ```
 
+-----
 <https://hardhat.org/tutorial/creating-a-new-hardhat-project>
 
-- Creating hardhat environment 
+- Creating **Hardhat** environment 
   - By **hardhat team** <https://hardhat.org/>
 ```
 npm install -D hardhat
@@ -157,6 +164,7 @@ Successfully generated 6 typings!
 Compiled 2 Solidity files successfully
 ```
 
+-----
 - [ok] run hardhat test 
   - Just before touching any solidity code
   - Hardhat team exelent work ;)
@@ -188,12 +196,11 @@ Unlock time is '1689365381' and block timestamp is '1689365382'
 ```
 
 -----
-
-<https://buildmedia.readthedocs.org/media/pdf/solidity/develop/solidity.pdf>
-
-<https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require>
-
-<https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
+- References: 
+  - <https://buildmedia.readthedocs.org/media/pdf/solidity/develop/solidity.pdf>
+  - <https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require>
+  - <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
+------
 
 ------
 ### step 2 - Start Solidity by TDD Typescript Hardhat 
@@ -264,7 +271,7 @@ npx hardhat test
 ------
 ------
 
-- Custom Error solidity and test with Hardhat
+- **Custom Error Solidity** and test with Hardhat
   - This is interesting 0.8 
   - **Naming Error Code** 
   - can **Share code many contracts**  
@@ -320,11 +327,10 @@ describe(`VendingMachine`, () => {
     Deployment VendingMachine
       ✔ Should Custom Error OK (132ms)
 ```
-
-------
 ------
 
-#### tdd function ok / rejected SafeMath inside function
+------
+#### **TDD [ok,  rejected] function** SafeMath solidity 0.8 default 
 
 - contracts/FunctionIntro.sol  
 ```ts
@@ -508,7 +514,7 @@ Unlock time is '1689450825' and block timestamp is '1689450826'
 ```
 
 -----
-### STEP 4 - Solidity **Modifier** TDD Typescript Hardhat
+### STEP 4 - **Solidity Modifier** TDD Typescript Hardhat
 -----
 
 - Solidity Modifiers
