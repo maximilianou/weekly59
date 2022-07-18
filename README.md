@@ -2,6 +2,7 @@
 
 ------
 ##### *weekly59: 20220715*
+  - [DOING]: TDD *Onboarding* Solidity Typescript Hardhat Nextjs
   - *[TODO]: TDD Access Control <https://docs.openzeppelin.com/contracts/4.x/access-control>* 
   - *[TODO]: TDD Event https://docs.openzeppelin.com/learn/developing-smart-contracts* 
 ------
