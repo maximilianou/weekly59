@@ -1,8 +1,12 @@
-# *Onboarding* Solidity TDD Typescript { weekly59: 20220715 }
+# *Onboarding* Solidity TDD Typescript 
+
+#### { weekly59: 20220715 } [TODO: Access Control <https://docs.openzeppelin.com/contracts/4.x/access-control>]
 
 ## *Onboarding* Solidity Typescript TDD Hardhat Nextjs
 
+------
 ### step 1 - environment
+------
 
 -----
 - Environment Tools Version
@@ -12,14 +16,13 @@
 -----
 
 -----
-<https://nextjs.org/learn/basics/create-nextjs-app>
-
 - Create **Nextjs** App Typescript 
   - Starting point
   - Just the tools, 
   - Default as we can,
   - Fresh Power of Teams Frameworks ;) 
   - ( do Not clone boilerplate )
+  - <https://nextjs.org/learn/basics/create-nextjs-app>
 ```
 npx creat-next-app blog4 --typescript
 ```
@@ -51,10 +54,9 @@ v18.3.0
 ```
 
 -----
-<https://hardhat.org/tutorial/creating-a-new-hardhat-project>
-
 - Creating **Hardhat** environment 
   - By **hardhat team** <https://hardhat.org/>
+  - <https://hardhat.org/tutorial/creating-a-new-hardhat-project>
 ```
 npm install -D hardhat
 rm README.md tsconfig.json
@@ -206,12 +208,11 @@ Unlock time is '1689365381' and block timestamp is '1689365382'
 ### step 2 - Start Solidity by TDD Typescript Hardhat 
 ------
 - contracts/SafeMath.sol 0.8 strict math overflow
+  - Reference: starting point <https://www.youtube.com/watch?v=xv9OmztShIw&list=PLO5VPQH6OWdVQwpQfw9rZ67O6Pjfo6q-p> 
 ```tsx
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
-
 import "hardhat/console.sol";
-
 contract SafeMath {
   function testUnderflow() public pure returns (uint) {
     uint x = 0;
@@ -269,14 +270,14 @@ npx hardhat test
 ```
 
 ------
-------
-
 - **Custom Error Solidity** and test with Hardhat
   - This is interesting 0.8 
   - **Naming Error Code** 
   - can **Share code many contracts**  
-  
-<https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement>
+  - <https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement>
+  - <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithcustomerror>
+------
+- contracts/VendingMachine.sol
 ```tsx
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
@@ -291,14 +292,12 @@ contract VendingMachine {
   }
 }
 ```
-<https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithcustomerror>
+- tests/VendingMachine.ts
 ```tsx
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
 describe(`VendingMachine`, () => {
-
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
@@ -306,7 +305,6 @@ describe(`VendingMachine`, () => {
     const vendingMachine = await VendingMachine.deploy();
     return { vendingMachine, owner, otherAccount };
   }
-
   describe(`Deployment VendingMachine`, () => {
     it(`Should Custom Error OK`, async () => {
       const { vendingMachine, otherAccount } = await loadFixture(deployFixture);
@@ -320,8 +318,7 @@ describe(`VendingMachine`, () => {
 ```
 - [ok] 
   - Custom Error Code ( Naming Error Code ) :()
-  - TDD Catch rejection ;)  
-   
+  - TDD Catch rejection ;)     
 ```
   VendingMachine
     Deployment VendingMachine
@@ -336,12 +333,10 @@ describe(`VendingMachine`, () => {
 ```ts
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
-
 // import "hardhat/console.sol";
-// function log( uint msg ){
+// function log( uint msg ){ // So we can have a function outside of Contract Instance, like.. tolling purpose reusable piece of soft ;)
 //   console.log( msg );
 // }
-
 contract FunctionIntro {
   function add(uint x, uint y) external pure returns (uint) {
     return x + y;
@@ -458,12 +453,10 @@ describe(`Counter`, () => {
   });
 });
 ```
-
 - [ok] Result
   - Instance variable in blockchain contract
   - Change state variable in blockchain 
-  - Catch rejection of SafeMath Underflow
-  
+  - Catch rejection of SafeMath Underflow  
 ```ts
 npx hardhat test
 
@@ -512,10 +505,11 @@ Unlock time is '1689450825' and block timestamp is '1689450826'
 
   18 passing (3s)
 ```
+------
 
------
+------
 ### STEP 4 - **Solidity Modifier** TDD Typescript Hardhat
------
+------
 
 - Solidity Modifiers
   - Always check isolated code
