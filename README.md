@@ -1,6 +1,6 @@
 # *Onboarding* Solidity TDD Typescript 
 
-#### { weekly59: 20220715 } [TODO: Access Control <https://docs.openzeppelin.com/contracts/4.x/access-control>]
+#### *{ weekly59: 20220715 } [TODO: Access Control <https://docs.openzeppelin.com/contracts/4.x/access-control>]*
 
 ## *Onboarding* Solidity Typescript TDD Hardhat Nextjs
 
