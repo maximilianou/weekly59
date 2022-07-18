@@ -822,5 +822,105 @@ npx hardhat test test/Ownable
   4 passing (2s)
   ```
 
+------
+- Struct - Object - Array - no execution code
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+contract Structs {
+  struct Car {
+    string model;
+    uint year;
+    address owner;
+  }
+  Car public car;
+  Car[] public cars;
+  mapping( address => Car[] ) public carsByOwner;
+  function examples() external  {
+    Car memory toyota = Car("Toyota", 2020, msg.sender); // memory execution of the funcion
+    Car memory lambo =  Car({ model: "Lamborghini", year: 2020, owner: msg.sender});
+    // memory - ReadOnly data
+    // storage - Write data in storage/blockchain state
+    cars.push(toyota);
+    cars.push(lambo);
+    carsByOwner[msg.sender] = cars;
+  }
+  function exampleCallable(uint[] calldata y) external pure { // calldata by reference, memory by value
+    _internal(y);
+  }
+  function _internal(uint[] memory _y) private pure {
+    uint x = _y[0];
+    x;
+  }
+}
+```
+
+------
+### STEP 6 - **Solidity event emit** TDD Typescript Hardhat
+------
+
+- Events
+  - contracts/Events.sol
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+contract Events {
+  event Log(string message, uint val);
+  function example() external { // is a transactional function, not readonly or view because of the emit data
+    emit Log("Thing the best of Others", 123456);
+  }
+}
+```
+  - test/Events.ts
+```tsx
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { expect, assert } from "chai";
+import { ethers } from "hardhat";
+describe(`Events`, () => {
+  async function deployFixture() {
+    const [owner, otherAccount] = await ethers.getSigners();
+    const Events = await ethers.getContractFactory("Events");
+    const events = await Events.deploy();
+    return { events, owner, otherAccount };
+  }
+  describe(`Deployment Events`, () => {
+    it(`Should check Event emit Log`, async () => {
+      const { events } = await loadFixture(deployFixture);
+      await expect( events.example() ).to.be.emit(events, "Log"); // Goooood ;)
+      assert.isOk;
+    });
+  });
+});
+```
+  - [ok] Result 
+```
+npx hardhat test test/Events
+  Events
+    Deployment Events
+      ✔ Should  (1428ms)
+  1 passing (1s)
+```
+------
+
+  - constract/Inheritance.sol
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+contract Dad {
+  function speak() public pure virtual returns (string memory){
+    return "Sempre Avanti!";
+  }
+}
+contract Son is Dad {
+  function speak() public pure virtual override returns (string memory){
+    return "Always Moving Forward!";
+  }
+}
+contract Nipote is Son {
+  function speak() public pure override returns (string memory){
+    return "Siempre Hacia Adelante!";
+  }
+}
+```
 
 ------
