@@ -1,4 +1,4 @@
-# *Onboarding* Solidity TDD Typescript 
+# TDD *Onboarding* Solidity Typescript Hardhat Nextjs 
 
 ------
 ##### *weekly59: 20220715*
@@ -7,20 +7,16 @@
   - *[TODO]: TDD Event https://docs.openzeppelin.com/learn/developing-smart-contracts* 
 ------
 
-## *Onboarding* Solidity Typescript TDD Hardhat Nextjs
+## TDD *Onboarding* Solidity Typescript Hardhat Nextjs
 
 ------
 ### step 1 - environment
-------
-
------
 - Environment Tools Version
   - Solidity 0.8.9
   - Nextjs 12.2.2
   - Hardhat 2.10.1
------
 
------
+### step 1.1
 - Create **Nextjs** App Typescript 
   - Starting point
   - Just the tools, 
@@ -59,6 +55,7 @@ v18.3.0
 ```
 
 -----
+### step 1.2
 - Creating **Hardhat** environment 
   - By **hardhat team** <https://hardhat.org/>
   - <https://hardhat.org/tutorial/creating-a-new-hardhat-project>
@@ -202,12 +199,11 @@ Unlock time is '1689365381' and block timestamp is '1689365382'
   9 passing (2s)
 ```
 
------
 - References: 
   - <https://buildmedia.readthedocs.org/media/pdf/solidity/develop/solidity.pdf>
   - <https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require>
   - <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
-------
+
 
 ------
 ### step 2 - Start Solidity by TDD Typescript Hardhat 
@@ -250,7 +246,6 @@ describe(`SafeMath`, () => {
     const safeMath = await SafeMath.deploy();
     return { safeMath, owner, otherAccount };
   }
-
   describe(`Deployment Safe Math`, () => {
     it(`Should check Underflow OK`, async () => {
       const { safeMath } = await loadFixture(deployFixture);
@@ -275,6 +270,7 @@ npx hardhat test
 ```
 
 ------
+### step 2.2
 - **Custom Error Solidity** and test with Hardhat
   - This is interesting 0.8 
   - **Naming Error Code** 
@@ -329,10 +325,12 @@ describe(`VendingMachine`, () => {
     Deployment VendingMachine
       ✔ Should Custom Error OK (132ms)
 ```
-------
+
 
 ------
+### step 2.3
 #### **TDD [ok,  rejected] function** SafeMath solidity 0.8 default 
+------
 
 - contracts/FunctionIntro.sol  
 ```ts
@@ -359,7 +357,6 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 describe(`FunctionIntro`, () => {
-
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
@@ -367,7 +364,6 @@ describe(`FunctionIntro`, () => {
     const functionIntro = await FunctionIntro.deploy();
     return { functionIntro, owner, otherAccount };
   }
-
   describe(`Deployment FunctionIntro`, () => {
     it(`Should add a + b = c`, async () => {
       const { functionIntro } = await loadFixture(deployFixture);
@@ -402,12 +398,10 @@ BigNumber { value: "10" }
 ------
 ### STEP 3 - Solidity Contract looking for storage memory instance Typescript TDD Hardhat
 ------
-
 - contracts/Counter.sol
 ```ts
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
-
 contract Counter {
   uint public count;
   function inc() external {
@@ -424,9 +418,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
 describe(`Counter`, () => {
-
   async function deployFixture() {
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
@@ -434,7 +426,6 @@ describe(`Counter`, () => {
     const counter = await Counter.deploy();
     return { counter, owner, otherAccount };
   }
-
   describe(`Deployment Counter`, () => {
     it(`Should increment storage data in contract Counter`, async () => {
       const { counter } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
@@ -515,7 +506,6 @@ Unlock time is '1689450825' and block timestamp is '1689450826'
 ------
 ### STEP 4 - **Solidity Modifier** TDD Typescript Hardhat
 ------
-
 - Solidity Modifiers
   - Always check isolated code
   - When there is an error or problem, isolate the problem
@@ -609,6 +599,228 @@ npx hardhat test test/FunctionModifier.ts
 ```
 
 ------
+### STEP 5 - **Solidity constructor()** TDD Typescript Hardhat
+------
+- Solidity constructor() methods in contracts
+  - Let see some console.log() in solidity **Thanks Hardhat Team** 
+  - <https://hardhat.org/tutorial/debugging-with-hardhat-network>
+  - inspect contract with console.log ethereum
+  - <https://docs.soliditylang.org/en/v0.8.13/introduction-to-smart-contracts.html>
+  - <https://docs.soliditylang.org/en/v0.8.13/units-and-global-variables.html#special-variables-functions>
+  - data and variables in the contract block ( now I want to see them ;)
+```
+Block and Transaction Properties
+    blockhash(uint blockNumber) returns (bytes32): hash of the given block when blocknumber is one of the 256 most recent blocks; otherwise returns zero
+    block.basefee (uint): current block’s base fee (EIP-3198 and EIP-1559)
+    block.chainid (uint): current chain id
+    block.coinbase (address payable): current block miner’s address
+    block.difficulty (uint): current block difficulty
+    block.gaslimit (uint): current block gaslimit
+    block.number (uint): current block number
+    block.timestamp (uint): current block timestamp as seconds since unix epoch
+    gasleft() returns (uint256): remaining gas
+    msg.data (bytes calldata): complete calldata
+    msg.sender (address): sender of the message (current call)
+    msg.sig (bytes4): first four bytes of the calldata (i.e. function identifier)
+    msg.value (uint): number of wei sent with the message
+    tx.gasprice (uint): gas price of the transaction
+    tx.origin (address): sender of the transaction (full call chain)
+```
+
+- [error] ok I forget to add a parameter value to call the constructor( _ ) 
+```
+npx hardhat test test/Constructor
+An unexpected error occurred:
+
+test/Constructor.ts:12:43 - error TS2554: Expected 1-2 arguments, but got 0.
+
+12     const constructor = await Constructor.deploy();
+                                             ~~~~~~~~
+  typechain-types/factories/Constructor__factory.ts:77:5
+    77     _x: PromiseOrValue<BigNumberish>,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    An argument for '_x' was not provided.
+```
+
+- [ok] first test Constructor solidity contract, hardhat tdd typescript console log
+  - contracts/Constructor.sol
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+// Import this file to use console.log
+import "hardhat/console.sol";
+contract Constructor { // this name Constuctor can be contract Banana but methods **constructor()** is reserved for any contractName as **constructor**
+  address public owner;
+  uint public x;
+  constructor(uint _x){
+    owner = msg.sender;
+    x = _x;
+    console.log("msg.sender:  %s", msg.sender);
+    //console.log("msg.value: %o", msg.value); // only on payable constructor
+    //console.log("msg.sig:   %o", msg.sig); 
+    //console.log("msg.data:  %o", msg.data);
+  }
+}
+```
+  - test/Constructor.ts
+```tsx
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { expect } from "chai";
+import { ethers } from "hardhat";
+const TEST_UINT_OK = 123;
+describe(`Constructor`, () => {
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const Constructor = await ethers.getContractFactory("Constructor");
+    const constructor = await Constructor.deploy(TEST_UINT_OK);
+    return { constructor, owner, otherAccount };
+  }
+  describe(`Deployment Constructor`, () => {
+    it(`Should call Constructor, and show some debug info as tutorial weekly59`, async () => {
+      const { constructor } = await loadFixture(deployFixture); // Give one **Constructor** instance.
+      expect( await constructor.x() ).to.be.equal(TEST_UINT_OK);
+    });
+  });
+});
+```
+  - [ok] Result, First call test Constructor console log msg sender
+```
+npx hardhat test test/Constructor
+  Constructor
+    Deployment Constructor
+msg.sender:  0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+      ✔ Should call Constructor, and show some debug info as tutorial weekly59 (1650ms)
+  1 passing (2s)
+```
+
+  - contracts/Constructor.sol more log tx block msg
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+// Import this file to use console.log
+import "hardhat/console.sol";
+contract Constructor { // this name Constuctor can be contract Banana but methods **constructor()** is reserved for any contractName as **constructor**
+  address public owner;
+  uint public x;
+  constructor(uint _x){
+    owner = msg.sender;
+    x = _x;
+    console.log("msg.sender:  %s", msg.sender);
+    console.log("tx.origin:  %s", tx.origin);
+    console.log("tx.gasprice:  %s", tx.gasprice);
+    console.log("block.timestamp:  %s", block.timestamp);
+    console.log("block.number:  %s", block.number);
+    console.log("block.chainid:  %s", block.chainid);
+  }
+}
+```
+  - [ok] Result more Constructor.sol more log tx block msg
+```
+npx hardhat test test/Constructor
+Compiled 1 Solidity file successfully
+  Constructor
+    Deployment Constructor
+msg.sender:  0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+tx.origin:  0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+tx.gasprice:  1875000000
+block.timestamp:  1658154619
+block.number:  1
+block.chainid:  31337
+      ✔ Should call Constructor, and show some debug info as tutorial weekly59 (1839ms)
+  1 passing (2s)
+```
+
 
 ------
+### STEP 5 - **Solidity state global error** TDD Typescript Hardhat
+------
+
+- contracts/Ownable.sol
+```tsx
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+error OWNABLE__NOT_OWNER();
+error OWNABLE__INVALID_ADDRESS();
+contract Ownable {
+  address public owner;
+  constructor(){
+    owner = msg.sender;
+  }
+  modifier onlyOwner() {
+    if ( msg.sender != owner ) {
+      revert OWNABLE__NOT_OWNER();
+    }
+    _; // continue execution of main thread
+  }
+  function setOwner(address _newOwner) external onlyOwner {
+    if( _newOwner ==  owner ){ //address(0) ){
+      revert OWNABLE__INVALID_ADDRESS();
+    }
+    owner = _newOwner;
+  }
+  function onlyOwnerCanCallThisFunction() external onlyOwner {    
+  }
+  function anyOneCanCallThisFunction() external {
+  }
+}
+``` 
+- test/Ownable.ts
+```tsx
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { expect, assert } from "chai";
+import { ethers } from "hardhat";
+describe(`Ownable`, () => {
+  async function deployFixture() {
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
+    const Ownable = await ethers.getContractFactory("Ownable");
+    const ownable = await Ownable.deploy();
+    return { ownable, owner, otherAccount };
+  }
+  describe(`Deployment Ownable`, () => {
+    it(`Should owner call ok`, async () => {
+      const { ownable } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await ownable.onlyOwnerCanCallThisFunction() ).ok;
+    });
+    it(`Should not owner call rejected`, async () => {
+      const { ownable, otherAccount } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await ownable.setOwner(otherAccount.address) ).to.be.ok;      
+      try{
+        await ownable.onlyOwnerCanCallThisFunction();
+        assert.fail();        
+      }catch(err){
+        assert.isOk;
+      }
+    });
+    it(`Should not owner call ok`, async () => {
+      const { ownable, otherAccount } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      expect( await ownable.setOwner(otherAccount.address) ).to.be.ok;
+      await expect( ownable.anyOneCanCallThisFunction() ).to.be.ok;
+    });
+    it(`Should reject same owner not change ownership rejected`, async () => {
+      const { ownable, owner ,otherAccount } = await loadFixture(deployFixture); // Give an instance 1 of the contract counter
+      try{
+        await ownable.setOwner(owner.getAddress());
+        assert.fail();        
+      }catch(err){
+        assert.isOk;
+      }
+    });
+  });
+});
+```
+- [ok] Result Ownable
+```
+npx hardhat test test/Ownable
+  Ownable
+    Deployment Ownable
+      ✔ Should owner call ok (1536ms)
+      ✔ Should not owner call rejected (128ms)
+      ✔ Should not owner call ok (48ms)
+      ✔ Should reject same owner not change ownership rejected (80ms)
+  4 passing (2s)
+  ```
+
+
 ------
