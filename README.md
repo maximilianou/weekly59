@@ -1,4 +1,4 @@
-# TDD *Onboarding* Solidity Typescript Hardhat Nextjs 
+# TDD *Onboarding* Solidity Typescript Hardhat Nextjs - Environment 
 
 ------
 ##### *weekly59: 20220715*
@@ -7,7 +7,7 @@
   - *[TODO]: TDD Event https://docs.openzeppelin.com/learn/developing-smart-contracts* 
 ------
 
-## TDD *Onboarding* Solidity Typescript Hardhat Nextjs
+## TDD *Onboarding* Solidity Typescript Hardhat Nextjs - Environment
 
 ------
 ### step 1 - environment
@@ -924,3 +924,11 @@ contract Nipote is Son {
 ```
 
 ------
+  - [   ] Function Selector 
+    -  <https://solidity-by-example.org/function-selector/> 
+  - [   ] DutchAuction  ( nft - solidity by example - timer discount sell )
+    - <https://solidity-by-example.org/app/dutch-auction/> 
+    - EnglishAuction
+    - <https://solidity-by-example.org/app/english-auction/>
+------
+
