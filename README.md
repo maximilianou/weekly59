@@ -1,13 +1,18 @@
-# TDD *Onboarding* Solidity Typescript Hardhat Nextjs - Environment 
+# *Onboarding* TDD Solidity Typescript Hardhat Nextjs - Environment 
 
 ------
 ##### *weekly59: 20220715*
-  - [DOING]: TDD *Onboarding* Solidity Typescript Hardhat Nextjs
+  - [DONE]: *Onboarding* TDD Solidity Typescript Hardhat Nextjs
   - *[TODO]: TDD Access Control <https://docs.openzeppelin.com/contracts/4.x/access-control>* 
   - *[TODO]: TDD Event https://docs.openzeppelin.com/learn/developing-smart-contracts* 
 ------
 
-## TDD *Onboarding* Solidity Typescript Hardhat Nextjs - Environment
+## *Onboarding* TDD Solidity Typescript Hardhat Nextjs - Environment
+
+------
+*Web 3 - First things First - Environment is one of the keys to do any staff*
+*In this case I use environment that can help me do the site that will use the contracts in next steps*
+------
 
 ------
 ### step 1 - environment
@@ -27,6 +32,11 @@
 ```
 npx creat-next-app blog4 --typescript
 ```
+
+------
+*Web 3 - In this Next step I have some code that I will be transforming in next weeks **I hope** to have the Full Stack Sample*
+------
+
 
 -----
 - Layout from weekly57 ( reference: **w3schools** )
@@ -53,6 +63,10 @@ nvm use 18
 node --version
 v18.3.0
 ```
+
+------
+*Web 3, Solidity - In this step add HardHat the simplest way to local development in web 3 and Solidity*
+------
 
 -----
 ### step 1.2
@@ -168,6 +182,10 @@ Successfully generated 6 typings!
 Compiled 2 Solidity files successfully
 ```
 
+------
+*web 3, Solidity - Compile Environment Complete, lets continue with TDD*
+------
+
 -----
 - [ok] run hardhat test 
   - Just before touching any solidity code
@@ -204,6 +222,10 @@ Unlock time is '1689365381' and block timestamp is '1689365382'
   - <https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require>
   - <https://hardhat.org/hardhat-chai-matchers/docs/reference#.revertedwithpanic>
 
+
+------
+*web 3, Solidity, TDD - Test Environment Complete, lets write down TDD with Typescript Nextjs Solidity*
+------
 
 ------
 ### step 2 - Start Solidity by TDD Typescript Hardhat 
@@ -270,6 +292,10 @@ npx hardhat test
 ```
 
 ------
+*web 3, Solidity, TDD catch Custom Error with Typescript Nextjs from Solidity*
+------
+
+------
 ### step 2.2
 - **Custom Error Solidity** and test with Hardhat
   - This is interesting 0.8 
@@ -325,6 +351,10 @@ describe(`VendingMachine`, () => {
     Deployment VendingMachine
       ✔ Should Custom Error OK (132ms)
 ```
+
+------
+*web 3, Solidity, TDD **passing parameter values** - call functions with parameter values from Typescript Nextjs run Solidity and **Catch Error** when this parameter values make them*
+------
 
 
 ------
@@ -394,6 +424,11 @@ BigNumber { value: "10" }
       ✔ Should sub a - b = d [ok]
 
 ```
+
+------
+*web 3, Solidity,  **Instance State Variables**, **Instance of a Contract** TDD change state variables - call functions that change instance state values from Typescript Nextjs run Solidity and catch Error when this parameter values make them*
+------
+
 
 ------
 ### STEP 3 - Solidity Contract looking for storage memory instance Typescript TDD Hardhat
@@ -502,6 +537,11 @@ Unlock time is '1689450825' and block timestamp is '1689450826'
   18 passing (3s)
 ```
 ------
+
+------
+*web 3, Solidity,  **Modifiers** TDD add/extract/refactor  restrictions/guards/validations - call functions that change instance state values from Typescript Nextjs run Solidity and catch Error when this conditions din't pass the guard/validation/restriction/constraint*
+------
+
 
 ------
 ### STEP 4 - **Solidity Modifier** TDD Typescript Hardhat
@@ -854,6 +894,10 @@ contract Structs {
   }
 }
 ```
+
+------
+*web 3, Solidity,  **Events Emit** TDD emit Soliditi event, and Receive in Typescript the Event*
+------
 
 ------
 ### STEP 6 - **Solidity event emit** TDD Typescript Hardhat
