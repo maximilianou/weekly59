@@ -5,6 +5,7 @@
   - [DONE]: *Onboarding* TDD Solidity Typescript Hardhat Nextjs
   - *[TODO]: TDD Access Control <https://docs.openzeppelin.com/contracts/4.x/access-control>* 
   - *[TODO]: TDD Event https://docs.openzeppelin.com/learn/developing-smart-contracts* 
+  - <https://github.com/maximilianou/weekly59>
 ------
 
 ## *Onboarding* TDD Solidity Typescript Hardhat Nextjs - Environment
@@ -976,3 +977,21 @@ contract Nipote is Son {
     - <https://solidity-by-example.org/app/english-auction/>
 ------
 
+```tsx
+{
+  name: "Maximiliano Usich",
+  email: "maximilianou@gmail.com",
+  role: ["Husband", "Dad", "Software Developer", "Mentor", "Full Stack nodejs Javascript Typescript"],
+  github: "https://github.com/maximilianou",
+  wallet: "simpledoers.eth",
+  eth: "ipns://simpledoers.eth",
+  eth: "https://simpledoers.eth.limo",
+  codersrank: "https://profile.codersrank.io/user/maximilianou",
+  aCryptoCoffe: "https://www.buymeacryptocoffee.xyz/simpledoers.eth",
+  aCoffe: "https://www.buymeacoffee.com/simpledoers",
+  mirror: "https://mirror.xyz/simpledoers.eth/subscribe",
+  twitter: "https://twitter.com/maximilianou",
+  indeed: "https://my.indeed.com/p/maximilianou-s1rmnyx", 
+  linkedin: "https://www.linkedin.com/in/maximilianou/"
+}
+```
