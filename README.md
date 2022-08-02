@@ -1,5 +1,16 @@
 # *Onboarding* TDD Solidity Typescript Hardhat Nextjs - Environment 
 
+<https://github.com/maximilianou/weekly59>
+
+- Local Environment - Step by Step - Sample Code
+- TDD for blockchain to be tested, like:
+- Solidity Event
+- Solidity Modifiers - AccessControl and Constraints
+- Solidity Custom Errors
+- Solidity Errors PANIC Overflow
+- Solidity Smart Contracts Instance Value
+- Solidity Smart Contracts Storage vs Memory
+
 ------
 ##### *weekly59: 20220715*
   - [DONE]: *Onboarding* TDD Solidity Typescript Hardhat Nextjs
